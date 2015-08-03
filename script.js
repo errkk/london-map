@@ -33,26 +33,20 @@
     d3.json("londontopo.json", function(error, data) {
         if (error) throw error;
 
-        data.transform = {
-            scale: [0.00005736413748528683, 0.000017385988039137747],
-            translate: [-0.190389659968519, 51.43136245091755]
-        };
-
         scale = function(scalefactor) {
             return [scalefactor * 0.005736413748528683, scalefactor * 0.0028385988039137747];
         }
-        data.transform = {
-            scale: scale(4.6),
-            translate: [20, -60]
-        };
+        data.transform.scale = scale(4.6);
+            //translate: [20, -60]
+        data.transform.translate = [data.transform.translate[0] * -10, data.transform.translate[1] * -1];
 
-    // Convert to GeoJSON for rendering
-    var buildingsGeoJSON = topojson.feature(data, data.objects.london);
+        // Convert to GeoJSON for rendering
+        var buildingsGeoJSON = topojson.feature(data, data.objects.london);
 
-    svg.insert("path")
-        .datum(buildingsGeoJSON)
-        .attr("class", "buildings")
-        .attr("d", path);
+        svg.insert("path")
+            .datum(buildingsGeoJSON)
+            .attr("class", "buildings")
+            .attr("d", path);
 
     //svg.insert("path")
         //.datum(topojson.object(data, data.objects.water))
