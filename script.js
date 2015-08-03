@@ -4,6 +4,7 @@
     var projection = d3.geo.orthographic()
         .translate([width / 2, height / 2])
         .center([0.0, 0.0])
+        .clipAngle(90)
         .scale(450);
 
     var path = d3.geo.path()
@@ -41,33 +42,52 @@
             return [scalefactor * 0.005736413748528683, scalefactor * 0.0028385988039137747];
         }
         data.transform = {
-            scale: scale(4),
-            translate: [20, -40]
+            scale: scale(4.6),
+            translate: [20, -60]
         };
 
     // Convert to GeoJSON for rendering
     var buildingsGeoJSON = topojson.feature(data, data.objects.london);
 
-    buildings.append("path")
+    svg.insert("path")
         .datum(buildingsGeoJSON)
         .attr("class", "buildings")
         .attr("d", path);
 
-    //landuse.append("path")
-        //.datum(topojson.object(data, data.objects.landuse))
+    //svg.insert("path")
+        //.datum(topojson.object(data, data.objects.water))
         //.attr("class", "landuse")
         //.attr("d", path);
 
     });
 
-    rotate(15, 50);
+    svg.append("defs").append("path")
+        .datum({type: "Sphere"})
+        .attr("id", "sphere")
+        .attr("d", path);
+
+    svg.append("use")
+        .attr("class", "fill")
+        .attr("xlink:href", "#sphere");
+
+    var rotation = 15;
+
+    rotate(rotation, 50);
 
     document.addEventListener('DOMContentLoaded', function() {
-        var rotateInput = document.getElementById('rotate_input');
-        var rotateElement = document.getElementById('rotate_value');
+        var rotateInput = document.createElement('input');
 
-        rotateInput.addEventListener('mouseup', function(evt) {
-            rotateElement.innerHTML = rotateInput.value;
+        rotateInput.type = 'range';
+        rotateInput.min = 0;
+        rotateInput.max = 100;
+        rotateInput.step = 5;
+        rotateInput.value = rotation;
+
+        document.getElementsByTagName('body')[0].appendChild(rotateInput);
+
+        rotateInput.addEventListener('change', function(evt) {
+            rotation = rotateInput.value;
+            console.log(rotateInput.value);
             rotate(rotateInput.value, 50);
         });
     });
