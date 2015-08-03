@@ -35,9 +35,9 @@
         // Convert to GeoJSON for rendering
         console.log(data.transform.scale);
 
-        var scale = 8.4;
+        var scale = 8.5;
         data.transform.scale = [data.transform.scale[0] * 80 * scale, data.transform.scale[1] * 100 * scale];
-        data.transform.translate = [data.transform.translate[0] * -9, data.transform.translate[1] * -1.6];
+        data.transform.translate = [data.transform.translate[0] * -9, data.transform.translate[1] * -1.7];
 
         // Convert to GeoJSON for rendering
         var buildingsGeoJSON = topojson.feature(data, data.objects.london84);
@@ -66,7 +66,7 @@
 
     var rotation = 15;
 
-    rotate(rotation, 50);
+    rotate(rotation, 48);
 
     document.addEventListener('DOMContentLoaded', function() {
         var rotateInput = document.createElement('input');
