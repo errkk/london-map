@@ -7,6 +7,8 @@
         .clipAngle(90)
         .scale(450);
 
+
+
     var path = d3.geo.path()
         .projection(projection);
 
@@ -27,21 +29,19 @@
         svg.selectAll("path").attr("d", path);
     };
 
-
-    var buildings = svg.append("g");
-
-    d3.json("londontopo.json", function(error, data) {
+    d3.json("buildings.json", function(error, data) {
         if (error) throw error;
 
-        scale = function(scalefactor) {
-            return [scalefactor * 0.005736413748528683, scalefactor * 0.0028385988039137747];
-        }
-        data.transform.scale = scale(4.6);
-            //translate: [20, -60]
-        data.transform.translate = [data.transform.translate[0] * -10, data.transform.translate[1] * -1];
+        // Convert to GeoJSON for rendering
+        console.log(data.transform.scale);
+
+        var scale = 8.4;
+        data.transform.scale = [data.transform.scale[0] * 80 * scale, data.transform.scale[1] * 100 * scale];
+        data.transform.translate = [data.transform.translate[0] * -9, data.transform.translate[1] * -1.6];
 
         // Convert to GeoJSON for rendering
-        var buildingsGeoJSON = topojson.feature(data, data.objects.london);
+        var buildingsGeoJSON = topojson.feature(data, data.objects.london84);
+
 
         svg.insert("path")
             .datum(buildingsGeoJSON)
