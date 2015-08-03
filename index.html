@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            .buildings {
+                fill: #3f6f4f;
+            }
+        </style>
+    </head>
+    <body>
+        <input type="range" max="100" min="0" step="1" name="rotate" id="rotate_input" value="0">
+        <p id="rotate_value">0</p>
 
-    /* CSS goes here. */
-
-</style>
-<body>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="http://d3js.org/topojson.v1.min.js"></script>
-    <script src="/script.js"></script>
-</body>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="http://d3js.org/topojson.v1.min.js"></script>
+        <script src="/script.js"></script>
+    </body>
+</html>
