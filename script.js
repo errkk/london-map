@@ -29,18 +29,16 @@
         svg.selectAll("path").attr("d", path);
     };
 
+    var scale = 9;
+
     d3.json("land.json", function(error, data) {
         if (error) throw error;
 
-        // Convert to GeoJSON for rendering
-
-        var scale = 8.5;
         data.transform.scale = [data.transform.scale[0] * 80 * scale, data.transform.scale[1] * 100 * scale];
-        data.transform.translate = [data.transform.translate[0] * 24.9, data.transform.translate[1] * -1.38];
+        data.transform.translate = [data.transform.translate[0] * 24.9, data.transform.translate[1] * -1.66];
 
         // Convert to GeoJSON for rendering
         var geoJSON = topojson.feature(data, data.objects.land);
-
 
         svg.insert("path")
             .datum(geoJSON)
@@ -51,31 +49,16 @@
     d3.json("buildings.json", function(error, data) {
         if (error) throw error;
 
-        // Convert to GeoJSON for rendering
-        console.log(data.transform.scale);
-        console.log(data.transform.translate);
-
-        var scale = 8.5;
         data.transform.scale = [data.transform.scale[0] * 80 * scale, data.transform.scale[1] * 100 * scale];
-        data.transform.translate = [data.transform.translate[0] * -9, data.transform.translate[1] * -1.7];
-
-        var transform = data.transform;
+        data.transform.translate = [data.transform.translate[0] * 24.9, data.transform.translate[1] * -1.66];
 
         // Convert to GeoJSON for rendering
-        var buildingsGeoJSON = topojson.feature(data, data.objects.london84);
-        window.buildings = buildingsGeoJSON;
-
+        var buildingsGeoJSON = topojson.feature(data, data.objects.buildings);
 
         svg.insert("path")
             .datum(buildingsGeoJSON)
             .attr("class", "buildings")
             .attr("d", path);
-
-    //svg.insert("path")
-        //.datum(topojson.object(data, data.objects.water))
-        //.attr("class", "landuse")
-        //.attr("d", path);
-
     });
 
     svg.append("defs").append("path")
