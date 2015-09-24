@@ -70,25 +70,20 @@
         .attr("class", "fill")
         .attr("xlink:href", "#sphere");
 
-    var rotation = 15;
+    var rotation = -20;
 
     rotate(rotation, 48);
 
     document.addEventListener('DOMContentLoaded', function() {
-        var rotateInput = document.createElement('input');
 
-        rotateInput.type = 'range';
-        rotateInput.min = 0;
-        rotateInput.max = 100;
-        rotateInput.step = 5;
-        rotateInput.value = rotation;
-
-        document.getElementsByTagName('body')[0].appendChild(rotateInput);
-
-        rotateInput.addEventListener('change', function(evt) {
-            rotation = rotateInput.value;
-            console.log(rotateInput.value);
-            rotate(rotateInput.value, 50);
+        document.addEventListener('keypress', function(evt) {
+            if(46 === evt.keyCode){
+                rotation ++;
+                rotate(rotation, 48);
+            }else if(44 === evt.keyCode){
+                rotation --;
+                rotate(rotation, 48);
+            }
         });
     });
 
